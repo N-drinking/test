@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大学生创业交流平台</title>
+    <style>
+        body, h1, h2, h3, h4, h5, h6 { margin: 0; padding: 0; font-family: '微软雅黑', sans-serif; }
+        header { background: #007BFF; color: #fff; padding: 10px 0; text-align: center; }
+        .container { width: 80%; margin: auto; padding: 20px 0; }
+        .welcome { text-align: center; margin-bottom: 20px; }
+        .forum { background: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .forum-title { background: #e9ecef; padding: 10px; border-radius: 5px; }
+        .chart-container { width: 60%; margin: auto; }
+        footer { background: #343a40; color: #fff; text-align: center; padding: 10px 0; }
+        @media (max-width: 768px) {
+            .chart-container { width: 100%; }
+        }
+        /* 引入字体和基础样式 */
+        @import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
+
+        body, h1, h2, h3, p {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* 夜间模式基础样式 */
+        body.night-mode {
+            background-color: #333;
+            color: #fff;
+        }
+
+        header {
+            background: #007BFF;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        #nightModeToggle {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .forum, .sidebar, .post-form {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .forum-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .post {
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .post:hover {
+            transform: translateY(-5px);
+        }
+
+        .post-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .post-content {
+            font-size: 16px;
+        }
+
+        .sidebar .tags {
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+        }
+
+        /* 表单样式 */
+        #newPostForm {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #newPostForm input, #newPostForm textarea {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        #newPostForm button {
+            background: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        #newPostForm button:hover {
+            background: #0056b3;
+        }
+
+        footer {
+            background: #343a40;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 20px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>大学生创业交流平台</h1>
+        <button id="nightModeToggle">夜间模式</button>
+    </header>
+
+    <div class="container">
+        <section class="forum">
+            <div class="forum-title">
+                <h2>最新讨论</h2>
+            </div>
+            <div id="posts" class="posts">
+                <!-- 帖子将通过JavaScript动态添加 -->
+            </div>
+        </section>
+
+        <aside class="sidebar">
+            <div class="tags">
+                <h3>标签过滤</h3>
+                <!-- 标签将通过JavaScript动态添加 -->
+            </div>
+        </aside>
+
+        <section class="post-form">
+            <h3>发布你的想法</h3>
+            <form id="newPostForm">
+                <input type="text" id="postTitle" placeholder="帖子标题" required>
+                <textarea id="postContent" placeholder="分享你的想法..." required></textarea>
+                <button type="submit">发布</button>
+            </form>
+        </section>
+    </div>
+
+
+    <div class="container">
+        <section class="welcome">
+            <h2>欢迎来到大学生创业交流平台</h2>
+            <p>这里是一个汇聚创意、分享经验、互相学习的社区。</p>
+        </section>
+
+        <section class="forum">
+            <div class="forum-title">
+                <h3>最新讨论</h3>
+            </div>
+            <article>
+                <h4>计算机科学创业趋势</h4>
+                <p>讨论最新的计算机科学创业趋势和机遇。</p>
+            </article>
+            <article>
+                <h4>生物技术创业案例分享</h4>
+                <p>分享生物技术领域的创业案例和经验。</p>
+            </article>
+            <!-- 更多讨论文章 -->
+        </section>
+
+        <section class="chart-container">
+            <h2>学科创业计划统计</h2>
+            <canvas id="statisticsChart"></canvas>
+        </section>
+    </div>
+
+    <footer>
+        <p>版权所有 &copy; 2024 大学生创业交流平台</p>
+    </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('statisticsChart').getContext('2d');
+        const statisticsChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['计算机', '生物', '数学', '翻译'],
+                datasets: [{
+                    label: '创业计划统计',
+                    data: [300, 150, 100, 50],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(255, 206, 86, 0.7)',
+                        'rgba(75, 192, 192, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: '各学科创业计划统计'
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                }
+            }
+        });
+    </script>
+
+    <script>
+        // 夜间模式切换
+        document.getElementById('nightModeToggle').addEventListener('click', function() {
+            document.body.classList.toggle('night-mode');
+        });
+
+        // 以下WebSocket代码需要服务器端支持
+        // 取消注释并配置正确的WebSocket端点和消息处理逻辑
+
+        // const socket = new SockJS('YOUR_ENDPOINT'); // 替换为你的WebSocket端点
+        // const stompClient = Stomp.over(socket);
+
+        // stompClient.connect({}, function(frame) {
+        //     console.log('Connected: ' + frame);
+        //     stompClient.subscribe('/topic/posts', function(post) {
+        //         displayPost(JSON.parse(post.body));
+        //     });
+        // });
+
+        // 处理表单提交
+        document.getElementById('newPostForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const title = document.getElementById('postTitle').value;
+            const content = document.getElementById('postContent').value;
+            // 这里应该添加代码来发送数据到服务器
+            // 例如使用 fetch API 或者 XMLHttpRequest
+            console.log('提交的数据:', { title, content });
+
+            // 显示帖子（示例）
+            displayPost({ title, content });
+
+            // 清空表单
+            document.getElementById('postTitle').value = '';
+            document.getElementById('postContent').value = '';
+        });
+
+        // 显示帖子
+        function displayPost(post) {
+            const postsContainer = document.getElementById('posts');
+            const postElement = document.createElement('div');
+            postElement.classList.add('post');
+            postElement.innerHTML = `<h4 class="post-title">${post.title}</h4><p class="post-content">${post.content}</p>`;
+            postsContainer.appendChild(postElement); // 添加帖子元素
+        }
+    </script>
+</body>
+</html>
